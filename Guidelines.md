@@ -19,6 +19,14 @@ u504012
 ## Service Design Principles
 
 ### Loose coupling
+Coupling refers to a connection or relationship between two things. A measure of coupling is comparable to a level of dependency. This principle advocates the design of service contracts, with a constant emphasis on reducing (loosening) dependencies between the service contract, its implementation, and service consumers.
+
+The principle of Loose Coupling promotes the independent design and evolution of a service’s logic and implementation while still emphasizing baseline interoperability with consumers that have come to rely on the service’s capabilities.
+
+This principle implies the following:
+- A service contract should not expose implementation details
+- A service contract can evolve without impacting existing consumers
+- A service in a particular domain can evolve independently of other domains
 
 ### Stability
 
