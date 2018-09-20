@@ -29,16 +29,16 @@ This principle implies the following:
 - A service in a particular domain can evolve independently of other domains
 
 ### Stability
-
+Todo
 ### Re-Usability
-
+Todo
 ### Contract based
-
+Todo
 ### Consistency
-
+Todo
 ### Ease of Use
-
+Todo
 ### Externalizable
-
+Todo
 ## HTTP Methods, Headers and Statuses
-
+Todo
