@@ -8,3 +8,6 @@
 
 - <a href="https://aws.amazon.com/blogs/compute/generate-your-own-api-gateway-developer-portal/">generate-your-own-api-gateway-developer-portal</a>
 - <a href="https://github.com/aws-samples/aws-api-gateway-developer-portal">aws-api-gateway-developer-portal</a>
+
+## Various
+- <a href="https://github.com/ekalinin/github-markdown-toc#gh-md-toc">Create table of content</a>
