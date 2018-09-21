@@ -3,7 +3,7 @@
 
 <#Platform-Name#> is a collection of reusable services that encapsulate well-defined business capabilities. Developers are encouraged to access these capabilities through Application Programming Interfaces (APIs) that enable consistent design patterns and principles. This facilitates a great developer experience and the ability to quickly compose complex business processes by combining multiple, complementary capabilities as building blocks.
 
-PayPal APIs follow the RESTful architectural style as much as possible. To support our objectives, we have developed a set of rules, standards, and conventions that apply to the design of RESTful APIs. 
+<#Platform-Name#> APIs follow the RESTful architectural style as much as possible. To support our objectives, we have developed a set of rules, standards, and conventions that apply to the design of RESTful APIs. 
 
 The documentation is as generic as possible to make it easier to incorporate into the guidelines you use in your projects. 
 If you have any updates, suggestions, or additions that you would like to contribute, please feel free to comment.
@@ -113,5 +113,123 @@ This principle implies the following:
 - The service contract and access (binding) protocols supported must meet the consumer's needs
 - The externalization of a service must not require reimplementation, or a change in service contract
 
-## HTTP Methods, Headers and Statuses
-Todo
+## API Guidelines
+### General
+#### MUST: Follow API First Principle	12
+#### MUST: Provide API Specification using OpenAPI	12
+#### Should: Use a Source Code Management System	13
+#### MUST: Provide API User Manual	13
+#### MUST: Write APIs in U.S. English	13
+
+### Meta Information
+#### Should: Contain API Meta Information	13
+#### Should: Use Semantic Versioning	13
+#### Should: Provide API Audience	14
+#### MUST: Provide API Identifiers	14
+
+### Security. 
+
+### Compatibility
+#### MUST: Do Not Break Backward Compatibility	14
+#### Should: Prefer Compatible Extensions	15
+#### Should: Prepare Clients To Not Crash On Compatible API Extensions	15
+#### Should: Design APIs Conservatively	16
+#### Should: Always Return JSON Objects As Top-Level Data Structures To Support Extensibility	16
+#### MUST: Avoid Versioning	17
+#### Should: Use URI Versioning	17
+
+### Deprecation
+#### MUST: External Partners Must Agree on Deprecation Timespan	17
+#### Should: Obtain Approval of Clients	17
+#### Should: Reflect Deprecation in API Definition	17
+#### Should: Monitor Usage of Deprecated APIs	18
+#### Should: Add a Warning Header to Responses	18
+#### Should: Add Monitoring for Warning Header	18
+#### MUST: Not Start Using Deprecated APIs	18
+
+### JSON Guidelines
+#### Should: Property names must be ASCII snake_case	18
+#### Should: Array names should be pluralized	18
+#### Should: Boolean property values must not be null	18
+#### Should: Null values should have their fields removed	18
+#### Should: Empty array values should not be null	19
+#### Should: Enumerations should be represented as Strings	19
+#### Should: Date property values should conform to RFC 3339	19
+#### Should: Time durations and intervals could conform to ISO 8601	19
+#### Should: Standards could be used for Language, Country and Currency	19
+
+### API Naming
+#### MUST: Use lowercase separate words with hyphens for Path Segments	19
+#### MUST: Use snake_case (never camelCase) for Query Parameters	20
+#### Should: Prefer Hyphenated-Pascal-Case for HTTP header Fields	20
+#### MUST: Pluralize Resource Names	20
+#### Should: Avoid Trailing Slashes	20
+#### May: Use Conventional Query Strings	20
+
+### Resources
+#### MUST: Avoid Actions — Think About Resources	20
+#### Should: Model complete business processes	21
+#### Should: Define useful resources	21
+#### MUST: Keep URLs Verb-Free	21
+#### Should: Use Domain-Specific Resource Names	21
+#### Should: Identify resources and Sub-Resources via Path Segments	21
+#### Should: Only Use UUIDs If Necessary	22
+#### May: Consider Using (Non-) Nested URLs	22
+#### Should: Limit number of Resource types	22
+#### Should: Limit number of Sub-Resource Levels	23
+
+### HTTP
+#### MUST: Use HTTP Methods Correctly	23
+#### Should: Fulfill Safeness and Idempotency Properties	26
+#### Should: Use Specific HTTP Status Codes	26
+#### Should: Specify Success and Error Responses	29
+#### Should: Use 207 for Batch or Bulk Requests	30
+#### Should: Use 429 with Headers for Rate Limits	30
+#### Should: Explicitly define the Collection Format of Query Parameters	31
+
+### Performance
+#### Should: Reduce Bandwidth Needs and Improve Responsiveness	31
+#### May: Use gzip Compression	31
+#### Should: Support Filtering of Resource Fields	32
+#### Should: Allow Optional Embedding of Sub-Resources	33
+#### Should: Document Caching, if Supported	33
+
+### Pagination
+#### Should: Support Pagination	34
+#### Should: Prefer Cursor-Based Pagination, Avoid Offset-Based Pagination	34
+#### May: Use Pagination Links Where Applicable	35
+
+### Hypermedia
+#### Must: Use REST Maturity Level 2	35
+#### May: Use REST Maturity Level 3 - HATEOAS	36
+#### Should: Use full, absolute URI	36
+#### Should: Use Common Hypertext Controls	36
+#### Should: Use Simple Hypertext Controls for Pagination and Self-References	37
+#### Should: Not Use “Link Headers” with JSON entities	37
+
+### Data formats
+#### Should: Use JSON to Encode Structured Data	37
+#### May: Use non JSON Media Types for Binary Data or Alternative Content Representations	38
+#### Should: Use Standard Date and Time Formats	38
+#### Should: Use Standards for Country, Language and Currency Codes	38
+#### Should: Define Format for Type Number and Integer	38
+#### Should: Prefer standard Media type name application/json	39
+
+### Common Data Types
+#### Should: Use a Common Money Object	39
+#### Should: Use common field names and semantics	40
+#### Should: Follow Hypertext Control Conventions	42
+#### Should: Use Problem JSON	42
+#### MUST: Do not expose Stack Traces	43
+
+### Common Headers
+#### Should: Use Content Headers Correctly	43
+#### Should: Use Standardized Headers	43
+#### May: Use Content-Location Header	43
+#### Should: Use Location Header instead of Content-Location Header	44
+#### May: Use the Prefer header to indicate processing preferences	44
+#### May: Consider using ETag together with If-(None-)Match header	44
+
+### API Operations
+#### Must: Publish OpenAPI Specification	45
+#### Should: Monitor API Usage	45
