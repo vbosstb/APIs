@@ -115,36 +115,39 @@ This principle implies the following:
 
 ## API Guidelines
 ### General
-#### MUST: Follow API First Principle
-As mentioned in the introduction, API First is one of our engineering and architecture principles. In a nutshell API First requires two aspects:
-- define APIs outside the code first using a standard specification language
-- get early review feedback from peers and client developers
-By defining APIs outside the code, we want to facilitate early review feedback and also a development discipline that focus service interface design on…
-- profound understanding of the domain and required functionality
-- generalized business entities / resources, i.e. avoidance of use case specific APIs
-- clear separation of WHAT vs. HOW concerns, i.e. abstraction from implementation aspects - APIs should be stable even if we replace complete service implementation including its underlying technology stack
+#### MUST: Follow API First Principle 
+As mentioned in the introduction, API First is one of our engineering and architecture principles. In a nutshell API First requires two aspects: 
+- define APIs outside the code first using a standard specification language 
+- get early review feedback from peers and client developers 
+
+By defining APIs outside the code, we want to facilitate early review feedback and also a development discipline that focus service interface design on... 
+- profound understanding of the domain and required functionality 
+- generalized business entities / resources, i.e. avoidance of use case specific APIs 
+- clear separation of WHAT vs. HOW concerns, i.e. abstraction from implementation aspects - APIs should be stable even if we replace complete service implementation including its underlying technology stack  
+
 Moreover, API definitions with standardized specification format also facilitate…
-- single source of truth for the API specification; it is a crucial part of a contract between service provider and client users
-- infrastructure tooling for API discovery, API GUIs, API documents, automated quality checks
-An element of API First is to get early review feedback from peers and client developers. Peer review is important for us to get high quality APIs, to enable architectural and design alignment and to supported development of client applications decoupled from service provider engineering life cycle.
+- single source of truth for the API specification; it is a crucial part of a contract between service provider and client users 
+- infrastructure tooling for API discovery, API GUIs, API documents, automated quality checks 
+
+An element of API First is to get early review feedback from peers and client developers. Peer review is important for us to get high quality APIs, to enable architectural and design alignment and to supported development of client applications decoupled from service provider engineering life cycle. 
 It is important to learn, that API First is not in conflict with the agile development principles that we love. Service applications should evolve incrementally — and so its APIs. Of course, our API specification will and should evolve iteratively in different cycles; however, each starting with draft status and early team and peer review feedback. API may change and profit from implementation concerns and automated testing feedback. API evolution during development life cycle may include breaking changes for not yet productive features and as long as we have aligned the changes with the clients. Hence, API First does not mean that you must have 100% domain and requirement understanding and can never produce code before you have defined the complete API and get it confirmed by peer review. On the other hand, API First obviously is in conflict with the bad practice of publishing API definition and asking for peer review after the service integration or even the service productive operation has started. It is crucial to request and get early feedback — as early as possible, but not before the API changes are comprehensive with focus to the next evolution step and have a certain quality (including API Guideline compliance), already confirmed via team internal reviews.
 
 #### MUST: Provide API Specification using OpenAPI
-We use the <a href="http://swagger.io/specification/">OpenAPI specification</a> (aka Swagger specification) as standard to define API specifications files.
+We use the <a href="http://swagger.io/specification/">OpenAPI specification</a> (aka Swagger specification) as standard to define API specifications files. 
 
 #### Should: Use a Source Code Management System
-The API specification files should be subject to version control using a source code management system - best together with the implementing sources. The API specifications of component external APIs must be published and marked with the intended target audience.
+The API specification files should be subject to version control using a source code management system - best together with the implementing sources. The API specifications of component external APIs must be published and marked with the intended target audience. 
 
 #### MUST: Provide API User Manual
-In addition to the API Specification, it is good practice to provide an API user manual to improve client developer experience, especially of engineers that are less experienced in using this API. A helpful API user manual typically describes the following API aspects:
+In addition to the API Specification, it is good practice to provide an API user manual to improve client developer experience, especially of engineers that are less experienced in using this API. A helpful API user manual typically describes the following API aspects: 
 - API scope, purpose, and use cases
 - concrete examples of API usage
 - edge cases, error situation details, and repair hints
-- architecture context and major dependencies - including figures and sequence flows
+- architecture context and major dependencies - including figures and sequence flows 
 The user manual must be published online, on specific team web servers, or as a Google doc. Please do not forget to include a link to the API user manual into the API specification using the #/externalDocs/url property.
 
 #### MUST: Write APIs in U.S. English
-APIs are written in U.S. English.
+APIs are written in U.S. English. 
 
 ### Meta Information
 #### Should: Contain API Meta Information
