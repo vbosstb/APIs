@@ -1015,9 +1015,76 @@ Note: When using the Content-Location header, the Content-Type header has to be 
   Content-Location: /products/123/images?format=raw
 
 #### Should: Use Location Header instead of Content-Location Header
+As the correct usage of Content-Location with respect to semantics and caching is difficult, we discourage the use of Content-Location. In most cases it is sufficient to direct clients to the resource location by using the Location header instead without hitting the Content-Location specific ambiguities and complexities.
+More details in <a href="https://tools.ietf.org/html/rfc7231">RFC 7231</a> <a href="https://tools.ietf.org/html/rfc7231#section-7.1.2">7.1.2 Location</a>, <a href="https://tools.ietf.org/html/rfc7231#section-3.1.4.2">3.1.4.2 Content-Location</a>
+
 #### May: Use the Prefer header to indicate processing preferences
+The Prefer header defined in <a href="https://tools.ietf.org/html/rfc7240">RFC7240</a> allows clients to request processing behaviors from servers. <a href="https://tools.ietf.org/html/rfc7240">RFC7240</a> pre-defines a number of preferences and is extensible, to allow others to be defined. Support for the Prefer header is entirely optional and at the discretion of API designers, but as an existing Internet Standard, is recommended over defining proprietary "X-" headers for processing directives.
+The Prefer header can defined like this in an API definition:
+  Prefer:
+    name: Prefer
+    description: |
+      The RFC7240 Prefer header indicates that particular server
+      behaviors are preferred by the client but are not required
+      for successful completion of the request.
+      # (indicate the preferences supported by the API)
+
+    in: header
+    type: string
+    required: false
+Supporting APIs may return the Preference-Applied header also defined in RFC7240 to indicate whether the preference was applied.
+
 #### May: Consider using ETag together with If-(None-)Match header
+When creating or updating resources it may be necessary to expose conflicts and to prevent the lost update problem. This can be best accomplished by using the ETag header together with the If-Match and If-None-Match. The contents of an ETag: <entity-tag> header is either (a) a hash of the response body, (b) a hash of the last modified field of the entity, or (c) a version number or identifier of the entity version.
+To expose conflicts between concurrent update operations via PUT, POST, or PATCH, the If-Match: <entity-tag> header can be used to force the server to check whether the version of the updated entity is conforming to the requested <entity-tag>. If no matching entity is found, the operation is supposed a to respond with status code 412 - precondition failed.
+Beside other use cases, the If-None-Match: header with parameter * can be used in a similar way to expose conflicts in resource creation. If any matching entity is found, the operation is supposed a to respond with status code 412 - precondition failed.
+The ETag, If-Match, and If-None-Match headers can be defined as follows in the API definition:
+  Etag:
+    name: Etag
+    description: |
+      The RFC7232 ETag header field in a response provides the current entity-
+      tag for the selected resource. An entity-tag is an opaque identifier for
+      different versions of a resource over time, regardless whether multiple
+      versions are valid at the same time. An entity-tag consists of an opaque
+      quoted string, possibly prefixed by a weakness indicator.
+
+    in: header
+    type: string
+    required: false
+    example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70"
+
+  IfMatch:
+    name: If-Match
+    description: |
+      The RFC7232 If-Match header field in a request requires the server to
+      only operate on the resource that matches at least one of the provided
+      entity-tags. This allows clients express a precondition that prevent
+      the method from being applied if there have been any changes to the
+      resource.
+
+    in: header
+    type: string
+    required: false
+    example:  "5", "7da7a728-f910-11e6-942a-68f728c1ba70"
+
+  IfNoneMatch:
+    name: If-None-Match
+    description: |
+      The RFC7232 If-None-Match header field in a request requires the server
+      to only operate on the resource if it does not match any of the provided
+      entity-tags. If the provided entity-tag is `*`, it is required that the
+      resource does not exist at all.
+
+    in: header
+    type: string
+    required: false
+    example: "7da7a728-f910-11e6-942a-68f728c1ba70", *
+Please also see the section “Optimistic Locking in RESTful APIs” for a discussion about alternative approaches.
 
 ### API Operations
 #### Must: Publish OpenAPI Specification
+<todo>
+All service applications must publish OpenAPI specifications of their external APIs. 
+
 #### Should: Monitor API Usage
+Owners of APIs used in production should monitor API service to get information about its using clients. This information, for instance, is useful to identify potential review partner for API changes.
