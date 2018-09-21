@@ -673,7 +673,8 @@ Before choosing cursor-based pagination, consider the following trade-offs:
 - Performance considerations - efficient server-side processing using offset-based pagination is hardly feasible for:
   - Higher data list volumes, especially if they do not reside in the database’s main memory
   - Sharded or NoSQL databases
-- Cursor-based navigation may not work if you need the total count of results and / or backward iteration support
+  - Cursor-based navigation may not work if you need the total count of results and / or backward iteration support
+
 Further reading:
 - <a href="https://dev.twitter.com/rest/public/timelines">Twitter</a>
 - <a href="http://use-the-index-luke.com/no-offset">Use the Index, Luke</a>
