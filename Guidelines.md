@@ -524,16 +524,17 @@ This guideline groups the following rules for HTTP status codes usage:
 •	When using HTTP status codes that are less commonly used and not listed below, you must provide good documentation in the API definition.
 There are ~60 different HTTP status codes with specific semantics defined in the HTTP standards (mainly <a href="https://tools.ietf.org/html/rfc7231#section-6">RFC7231</a> and <a href="https://tools.ietf.org/html/rfc6585">RFC-6585</a>) - and there are upcoming new ones, e.g. <a href="https://tools.ietf.org/html/draft-tbray-http-legally-restricted-status-05">draft legally-restricted-status</a> (see overview on all error codes on <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">Wikipedia</a> or via <a href="https://httpstatuses.com/">https://httpstatuses.com/</a>). And there are unofficial ones, e.g. used by specific web servers like Nginx.
 
-List of most commonly used and best understood HTTP status codes:
+List of most commonly used and best understood HTTP status codes: 
+
 <b>Success Codes</b>
 
 | Code | Meaning | Methods |
-| === | === | === |
-| 200 | OK - this is the standard success response | All
-| 201 | Created - Returned on successful entity creation. You are free to return either an empty response or the created resource in conjunction with the Location header. (More details found in the Common Headers.) Always set the Location header. | POST, PUT
-| 202 | Accepted - The request was successful and will be processed asynchronously. | POST, PUT, DELETE, PATCH
-| 204 | No content - There is no response body | PUT, DELETE, PATCH
-| 207 | Multi-Status - The response body contains multiple status informations for different parts of a batch/bulk request. | POST
+| --- | --- | --- |
+| 200 | OK - this is the standard success response | All |
+| 201 | Created - Returned on successful entity creation. You are free to return either an empty response or the created resource in conjunction with the Location header. (More details found in the Common Headers.) Always set the Location header. | POST, PUT |
+| 202 | Accepted - The request was successful and will be processed asynchronously. | POST, PUT, DELETE, PATCH |
+| 204 | No content - There is no response body | PUT, DELETE, PATCH |
+| 207 | Multi-Status - The response body contains multiple status informations for different parts of a batch/bulk request. | POST |
 
 <b>Redirection Codes</b>
 
@@ -564,11 +565,11 @@ List of most commonly used and best understood HTTP status codes:
 
 <b>Server Side Error Codes:</b>
 
-    | Code | Meaning | Methods | 
-    | --- | --- | --- |
-    | 500 | Internal Server Error - a generic error indication for an unexpected server execution problem (here, client retry may be sensible) | All | 
-    | 501 | Not Implemented - server cannot fulfill the request (usually implies future availability, e.g. new feature). | All | 
-    | 503 | Service Unavailable - server is (temporarily) not available (e.g. due to overload) — client retry may be sensible. | All | 
+| Code | Meaning | Methods | 
+| --- | --- | --- |
+| 500 | Internal Server Error - a generic error indication for an unexpected server execution problem (here, client retry may be sensible) | All | 
+| 501 | Not Implemented - server cannot fulfill the request (usually implies future availability, e.g. new feature). | All | 
+| 503 | Service Unavailable - server is (temporarily) not available (e.g. due to overload) — client retry may be sensible. | All | 
 
 #### Should: Specify Success and Error Responses
 APIs should define the functional, business view and abstract from implementation aspects. Success and error responses are a vital part to define how an API is used correctly.
