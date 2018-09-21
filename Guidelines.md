@@ -1079,7 +1079,7 @@ Owners of APIs used in production should monitor API service to get information 
 
 
 
-    This is a regular paragraph.
+    This is a regular paragraph:
 
     <table>
         <tr>
