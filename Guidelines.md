@@ -1038,20 +1038,17 @@ Supporting APIs may return the Preference-Applied header also defined in RFC7240
 When creating or updating resources it may be necessary to expose conflicts and to prevent the lost update problem. This can be best accomplished by using the ETag header together with the If-Match and If-None-Match. The contents of an ETag: <entity-tag> header is either (a) a hash of the response body, (b) a hash of the last modified field of the entity, or (c) a version number or identifier of the entity version.
 To expose conflicts between concurrent update operations via PUT, POST, or PATCH, the If-Match: <entity-tag> header can be used to force the server to check whether the version of the updated entity is conforming to the requested <entity-tag>. If no matching entity is found, the operation is supposed a to respond with status code 412 - precondition failed.
 Beside other use cases, the If-None-Match: header with parameter * can be used in a similar way to expose conflicts in resource creation. If any matching entity is found, the operation is supposed a to respond with status code 412 - precondition failed.
-The ETag, If-Match, and If-None-Match headers can be defined as follows in the API definition:
-  Etag:
-    name: Etag
-    description: |
-      The RFC7232 ETag header field in a response provides the current entity-
-      tag for the selected resource. An entity-tag is an opaque identifier for
-      different versions of a resource over time, regardless whether multiple
-      versions are valid at the same time. An entity-tag consists of an opaque
-      quoted string, possibly prefixed by a weakness indicator.
 
-    in: header
-    type: string
-    required: false
-    example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70"
+The ETag, If-Match, and If-None-Match headers can be defined as follows in the API definition:
+
+Etag:
+  name: Etag
+  description:
+    The RFC7232 ETag header field in a response provides the current entitytag for the selected resource. An entity-tag is an opaque identifier for different versions of a resource over time, regardless whether multiple versions are valid at the same time. An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.
+  in: header
+  type: string
+  required: false
+  example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70"
 
   IfMatch:
     name: If-Match
@@ -1061,7 +1058,6 @@ The ETag, If-Match, and If-None-Match headers can be defined as follows in the A
       entity-tags. This allows clients express a precondition that prevent
       the method from being applied if there have been any changes to the
       resource.
-
     in: header
     type: string
     required: false
@@ -1074,11 +1070,11 @@ The ETag, If-Match, and If-None-Match headers can be defined as follows in the A
       to only operate on the resource if it does not match any of the provided
       entity-tags. If the provided entity-tag is `*`, it is required that the
       resource does not exist at all.
-
     in: header
     type: string
     required: false
     example: "7da7a728-f910-11e6-942a-68f728c1ba70", *
+
 Please also see the section “Optimistic Locking in RESTful APIs” for a discussion about alternative approaches.
 
 ### API Operations
