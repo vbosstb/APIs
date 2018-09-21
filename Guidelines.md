@@ -1041,15 +1041,15 @@ Beside other use cases, the If-None-Match: header with parameter * can be used i
 
 The ETag, If-Match, and If-None-Match headers can be defined as follows in the API definition:
 
-  Etag:  <br />  
+  Etag:  
     name: Etag  
     description:  
       The RFC7232 ETag header field in a response provides the current entitytag for the selected resource. An entity-tag is an opaque identifier for different versions of a resource over time, regardless whether multiple versions are valid at the same time. An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.  
-    in: header 
-    type: string 
-    required: false 
-    example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70" 
-
+    in: header  
+    type: string  
+    required: false  
+    example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70"  
+    
   IfMatch:
     name: If-Match
     description: |
