@@ -512,12 +512,10 @@ TODO
 #### Should: Specify Success and Error Responses
 APIs should define the functional, business view and abstract from implementation aspects. Success and error responses are a vital part to define how an API is used correctly.
 Therefore, the OpenAPI specification must contain definitions for ALL success and error responses. Both are part of the interface definition and provide important information for service clients to handle standard as well as exceptional situations. For each response the most specific HTTP status code should be selected that conveys the domain-specific success or error semantic — see “Use Specific HTTP Status Codes”.
-To transport error information beside the status code, we use a standardized error return object specification that must be used.
-Remark: In most cases it is not useful to document all technical errors, especially if they are not under control of the service provider. Thus unless a response code conveys application-specific functional semantics or is used in a none standard way that requires additional explanation, multiple error response specifications can be combined using the following pattern:
-  default:
-    description: a specific error occurred - see status code for more information.
-    schema:
-      $ref: 'https://zalando.github.io/problem/schema.yaml#/Problem'
+To transport error information beside the status code, we should use a standardized error return object specification. 
+
+Specification is yet to be defined !
+
 Note: It is best practice to explicitly specify all successful status codes. This prevents any conflict with the above pattern.
 The list of status code that in general can be omitted from API specifications includes but is not limited to:
 - 401 Unauthorized
@@ -533,7 +531,9 @@ The list of status code that in general can be omitted from API specifications i
 - 502 Bad Gateway
 - 503 Service Unavailable
 - 504 Gateway Timeout
+
 Note: Even though all status code may be documented explicitly, clients must always be prepared for responses with unexpected status codes. In case of doubt they should handle them like they would handle the corresponding x00 code. Adding new response codes (specially error responses) should be considered a compatible API evolution.
+
 API designers should also think about a troubleshooting board as part of the associated online API documentation. It provides information and handling guidance on application-specific errors and is referenced via links from the API specification. This can reduce service support tasks and contribute to service client and provider performance.
 
 #### Should: Use 207 for Batch or Bulk Requests
