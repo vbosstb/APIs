@@ -148,16 +148,78 @@ APIs are written in U.S. English.
 
 ### Meta Information
 #### Should: Contain API Meta Information
-#### Should: Use Semantic Versioning
-#### Should: Provide API Audience
-#### MUST: Provide API Identifiers
+API specifications must contain the following OpenAPI meta information to allow for API management:
+- #/info/title as (unique) identifying name of the API
+- #/info/version to distinguish API specifications versions following semantic rules
+- #/info/description containing a proper description of the API
+- #/info/contact/{name,url,email} containing the responsible team
+- #/info/x-audience intended target audience of the API.
+- #/info/x-api-id unique identifier of the API
 
-### Security. 
+#### Should: Use Semantic Versioning
+OpenAPI allows to specify the API specification version in #/info/version. To share a common semantic of version information we expect API designers to comply to Semantic Versioning 2.0 rules 1 to 8 and 11 restricted to the format <MAJOR>.<MINOR>.<PATCH> for versions as follows:
+- Increment the MAJOR version when you make incompatible API changes after having aligned this changes with consumers. (should be avoided)
+- Increment the MINOR version when you add new functionality in a backwards-compatible manner.
+- Optionally increment the PATCH version when you make backwards-compatible bug fixes or editorial changes not affecting the functionality.
+Additional Notes:
+- Pre-release versions (rule 9) and build metadata (rule 10) must not be used in API version information.
+- While patch versions are useful for fixing typos etc, API designers are free to decide whether they increment it or not.
+- API designers should consider to use API version 0.y.z (rule 4) for initial API design.
+
+#### Should: Provide API Audience (TODO)
+Each API must be classified with respect to the intended target audience supposed to consume the API, to facilitate differentiated standards on APIs for discoverability, changeability, quality of design and documentation, as well as permission granting. We differentiate the following API audience groups with clear organisational and legal boundaries:
+##### component-internal
+The API consumers with this audience are restricted to applications of the same functional component. All services of a functional component are owned by specific dedicated owner and engineering team. Typical examples are APIs being used by internal helper and worker services or that support service operation.
+##### business-unit-internal
+The API consumers with this audience are restricted to applications of a specific product portfolio owned by the same business unit.
+##### company-internal
+The API consumers with this audience are restricted to applications owned by the business units of the same the company (…)
+##### external-partner
+The API consumers with this audience are restricted to applications of business partners of the company owning the API and the company itself.
+##### external-public
+APIs with this audience can be accessed by anyone with Internet access.
+Note: a smaller audience group is intentionally included in the wider group and thus does not need to be declared additionally.
+Note: Exactly one audience per API specification is allowed. For this reason a smaller audience group is intentionally included in the wider group and thus does not need to be declared additionally. If parts of your API have a different target audience, we recommend to split API specifications along the target audience — even if this creates redundancies (rationale).
+
+#### MUST: Provide API Identifiers
+Each API should be identified by an explicit, owner assigned, globally unique, and immutable API identifier. APIs evolve and every API aspect may change, except the API identifier. Based on the API identifier, we can track the API life cycle and manage the history and evolution of an API as a sequence of API specifications. 
+
+### Security. (TODO)
+We should at least be protected against the “<a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project">OWASP Top 10 Most Critical Web Application Security Risks</a>”, …more is always better.
 
 ### Compatibility
 #### MUST: Do Not Break Backward Compatibility
+Change APIs, but keep all consumers running. Consumers usually have independent release lifecycles, focus on stability, and avoid changes that do not provide additional value. APIs are contracts between service providers and service consumers that cannot be broken via unilateral decisions.
+There are two techniques to change APIs without breaking them:
+- follow rules for compatible extensions.
+- introduce new API versions and still support older versions.
+We strongly encourage using compatible API extensions and discourage versioning. The following guidelines for service providers and consumers enable us (having Postel’s Law in mind) to make compatible changes without versioning.
+
+<b>Note</b>: There is a difference between incompatible and breaking changes. Incompatible changes are changes that are not covered by the compatibility rules below. Breaking changes are incompatible changes deployed into operation, and thereby breaking running API consumers. Usually, incompatible changes are breaking changes when deployed into operation. 
+However, in specific controlled situations it is possible to deploy incompatible changes in a non-breaking way, if no API consumer is using the affected API aspects (see also Deprecation guidelines).
+
+<b>Hint</b>: Please note that the compatibility guarantees are for the "on the wire" format. Binary or source compatibility of code generated from an API definition is not covered by these rules. If client implementations update their generation process to a new version of the API definition, it has to be expected that code changes are necessary.
+
 #### Should: Prefer Compatible Extensions
+API designers should apply the following rules to evolve RESTful APIs for services in a backward-compatible way:
+- Add only optional, never mandatory fields.
+- Never change the semantic of fields (e.g. changing the semantic from customer-number to customer-id, as both are different unique customer keys)
+- Input fields may have (complex) constraints being validated via server-side business logic. Never change the validation logic to be more restrictive and make sure that all constraints are clearly defined in description.
+- Enum ranges can be reduced when used as input parameters, only if the server is ready to accept and handle old range values too. Enum range can be reduced when used as output parameters.
+- Enum ranges cannot not be extended when used for output parameters — clients may not be prepared to handle it. However, enum ranges can be extended when used for input parameters.
+- Use x-extensible-enum, if range is used for output parameters and likely to be extended with growing functionality. It defines an open list of explicit values and clients must be agnostic to new values.
+- Support redirection in case an URL has to change (Moved Permanently ?).
+
 #### Should: Prepare Clients To Not Crash On Compatible API Extensions
+Service clients should apply the robustness principle:
+- Be conservative with API requests and data passed as input, e.g. avoid to exploit definition deficits like passing megabytes for strings with unspecified maximum length.
+- Be tolerant in processing and reading data of API responses, more specifically…
+Service clients must be prepared for compatible API extensions of service providers:
+- Be tolerant with unknown fields in the payload (see also Fowler’s "TolerantReader" post), i.e. ignore new fields but do not eliminate them from payload if needed for subsequent PUT requests.
+- Be prepared that x-extensible-enum return parameter may deliver new values; either be agnostic or provide default behavior for unknown values.
+- Be prepared to handle HTTP status codes not explicitly specified in endpoint definitions. Note also, that status codes are extensible. Default handling is how you would treat the corresponding x00 code (see RFC7231 Section 6).
+- Follow the redirect when the server returns HTTP status 301 Moved Permanently.
+
 #### Should: Design APIs Conservatively
 #### Should: Always Return JSON Objects As Top-Level Data Structures To Support Extensibility
 #### MUST: Avoid Versioning
