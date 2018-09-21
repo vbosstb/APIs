@@ -1076,3 +1076,16 @@ All service applications must publish OpenAPI specifications of their external A
 
 #### Should: Monitor API Usage
 Owners of APIs used in production should monitor API service to get information about its using clients. This information, for instance, is useful to identify potential review partner for API changes.
+
+
+
+    This is a regular paragraph.
+
+    <table>
+        <tr>
+            <td>Foo</td>
+        </tr>
+    </table>
+
+    This is another regular paragraph.
+
