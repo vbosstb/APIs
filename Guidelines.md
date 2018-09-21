@@ -5,7 +5,7 @@
 
 <#Platform-Name#> APIs follow the RESTful architectural style as much as possible. To support our objectives, we have developed a set of rules, standards, and conventions that apply to the design of RESTful APIs. 
 
-The documentation is as generic as possible to make it easier to incorporate into the guidelines you use in your projects. 
+The documentation is as genericdddd as possible to make it easier to incorporate into the guidelines you use in your projects. 
 If you have any updates, suggestions, or additions that you would like to contribute, please feel free to comment.
 
 ### Contributors
