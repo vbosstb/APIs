@@ -890,88 +890,72 @@ Example JSON schema:
 These properties are not always strictly necessary, but making them idiomatic allows API client developers to build up a common understanding of the resources. There is very little utility for API consumers in having different names or value types for these fields across APIs.
 ##### Address Fields
 Address structures play a role in different functional and use-case contexts, including country variances. All attributes that relate to address information should follow the naming and semantics defined below.
-  addressee:
-    description: a (natural or legal) person that gets addressed
-    type: object
-    required:
-      - first_name
-      - last_name
-      - street
-      - city
-      - zip
-      - country_code
-    properties:
-      salutation:
-        description: |
-          a salutation and/or title used for personal contacts to some
-          addressee; not to be confused with the gender information!
-        type: string
-        example: Mr
-      first_name:
-        description: |
-          given name(s) or first name(s) of a person; may also include the
-          middle names.
-        type: string
-        example: Hans Dieter
-      last_name:
-        description: |
-          family name(s) or surname(s) of a person
-        type: string
-        example: Mustermann
-      business_name:
-        description: |
-          company name of the business organization. Used when a business is
-          the actual addressee; for personal shipments to office addresses, use
-          `care_of` instead.
-        type: string
-        example: Consulting Services GmbH
-    required:
-      - first_name
-      - last_name
 
-  address:
-    description:
-      an address of a location/destination
-    type: object
-    properties:
-      care_of:
-        description: |
-          (aka c/o) the person that resides at the address, if different from
-          addressee. E.g. used when sending a personal parcel to the
-          office /someone else's home where the addressee resides temporarily
-        type: string
-        example: Consulting Services GmbH
-      street:
-        description: |
-          the full street address including house number and street name
-        type: string
-        example: Schönhauser Allee 103
-      additional:
-        description: |
-          further details like building name, suite, apartment number, etc.
-        type: string
-        example: 2. Hinterhof rechts
-      city:
-        description: |
-          name of the city / locality
-        type: string
-        example: Berlin
-      zip:
-        description: |
-          zip code or postal code
-        type: string
-        example: 14265
-      country_code:
-        description: |
-          the country code according to
-          [iso-3166-1-alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
-        type: string
-        example: DE
-    required:
-      - street
-      - city
-      - zip
-      - country_code
+    addressee:
+        description: a (natural or legal) person that gets addressed
+        type: object
+        required:
+            - first_name
+            - last_name
+            - street
+            - city
+            - zip
+            - country_code
+        properties:
+            salutation:
+                description: a salutation and/or title used for personal contacts to some addressee; not to be confused with the gender information!
+                type: string
+                example: Mr
+            first_name:
+                description: given name(s) or first name(s) of a person; may also include the middle names.
+                type: string
+                example: Hans Dieter
+            last_name:
+                description: family name(s) or surname(s) of a person
+                type: string
+                example: Mustermann
+            business_name:
+                description: company name of the business organization. Used when a business is the actual addressee; for personal shipments to office addresses, use `care_of` instead.
+                type: string
+                example: Consulting Services GmbH
+        required:
+            - first_name
+            - last_name
+
+    address:
+        description: an address of a location/destination
+        type: object
+        properties:
+            care_of:
+                description: (aka c/o) the person that resides at the address, if different from addressee. E.g. used when sending a personal parcel to the office /someone else's home where the addressee resides temporarily
+                type: string
+                example: Consulting Services GmbH
+            street:
+                description: the full street address including house number and street name
+                type: string
+                example: Schönhauser Allee 103  
+            additional:
+                description: further details like building name, suite, apartment number, etc.
+                type: string
+                example: 2. Hinterhof rechts
+            city:
+                description: name of the city / locality
+                type: string
+                example: Berlin
+            zip:
+                description: zip code or postal code
+                type: string
+                example: 14265
+            country_code:
+                description: the country code according to [iso-3166-1-alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+                type: string
+                example: DE
+        required:
+            - street
+            - city
+            - zip
+            - country_code
+      
 Grouping and cardinality of fields in specific data types may vary based on the specific use case (e.g. combining addressee and address fields into a single type when modeling an address label vs distinct addressee and address types when modeling users and their addresses).
 
 #### Should: Follow Hypertext Control Conventions
@@ -1008,11 +992,12 @@ The Content-Location header can be used to support the following use cases:
 - For writing operations PUT and PATCH, an identical location to the requested URI, can be used to explicitly indicate that the returned resource is the current representation of the newly created or updated resource.
 - For writing operations POST and DELETE, a content location can be used to indicate that the body contains a status report resource in response to the requested action, which is available at provided location.
 Note: When using the Content-Location header, the Content-Type header has to be set as well. For example:
-  GET /products/123/images HTTP/1.1
-
-  HTTP/1.1 200 OK
-  Content-Type: image/png
-  Content-Location: /products/123/images?format=raw
+  
+    GET /products/123/images HTTP/1.1
+    
+    HTTP/1.1 200 OK
+    Content-Type: image/png
+    Content-Location: /products/123/images?format=raw
 
 #### Should: Use Location Header instead of Content-Location Header
 As the correct usage of Content-Location with respect to semantics and caching is difficult, we discourage the use of Content-Location. In most cases it is sufficient to direct clients to the resource location by using the Location header instead without hitting the Content-Location specific ambiguities and complexities.
@@ -1021,17 +1006,14 @@ More details in <a href="https://tools.ietf.org/html/rfc7231">RFC 7231</a> <a hr
 #### May: Use the Prefer header to indicate processing preferences
 The Prefer header defined in <a href="https://tools.ietf.org/html/rfc7240">RFC7240</a> allows clients to request processing behaviors from servers. <a href="https://tools.ietf.org/html/rfc7240">RFC7240</a> pre-defines a number of preferences and is extensible, to allow others to be defined. Support for the Prefer header is entirely optional and at the discretion of API designers, but as an existing Internet Standard, is recommended over defining proprietary "X-" headers for processing directives.
 The Prefer header can defined like this in an API definition:
-  Prefer:
-    name: Prefer
-    description: |
-      The RFC7240 Prefer header indicates that particular server
-      behaviors are preferred by the client but are not required
-      for successful completion of the request.
-      # (indicate the preferences supported by the API)
 
-    in: header
-    type: string
-    required: false
+    Prefer:
+        name: Prefer
+        description: The RFC7240 Prefer header indicates that particular server behaviors are preferred by the client but are not required for successful completion of the request. # (indicate the preferences supported by the API)
+        in: header
+        type: string
+        required: false
+        
 Supporting APIs may return the Preference-Applied header also defined in RFC7240 to indicate whether the preference was applied.
 
 #### May: Consider using ETag together with If-(None-)Match header
@@ -1074,16 +1056,4 @@ All service applications must publish OpenAPI specifications of their external A
 
 #### Should: Monitor API Usage
 Owners of APIs used in production should monitor API service to get information about its using clients. This information, for instance, is useful to identify potential review partner for API changes.
-
-
-
-    This is a regular paragraph:
-
-    <table>
-        <tr>
-            <td>Foo</td>
-        </tr>
-    </table>
-
-    This is another regular paragraph.
 
