@@ -115,121 +115,121 @@ This principle implies the following:
 
 ## API Guidelines
 ### General
-#### MUST: Follow API First Principle	12
-#### MUST: Provide API Specification using OpenAPI	12
-#### Should: Use a Source Code Management System	13
-#### MUST: Provide API User Manual	13
-#### MUST: Write APIs in U.S. English	13
+#### MUST: Follow API First Principle
+#### MUST: Provide API Specification using OpenAPI
+#### Should: Use a Source Code Management System
+#### MUST: Provide API User Manual
+#### MUST: Write APIs in U.S. English
 
 ### Meta Information
-#### Should: Contain API Meta Information	13
-#### Should: Use Semantic Versioning	13
-#### Should: Provide API Audience	14
-#### MUST: Provide API Identifiers	14
+#### Should: Contain API Meta Information
+#### Should: Use Semantic Versioning
+#### Should: Provide API Audience
+#### MUST: Provide API Identifiers
 
 ### Security. 
 
 ### Compatibility
-#### MUST: Do Not Break Backward Compatibility	14
-#### Should: Prefer Compatible Extensions	15
-#### Should: Prepare Clients To Not Crash On Compatible API Extensions	15
-#### Should: Design APIs Conservatively	16
-#### Should: Always Return JSON Objects As Top-Level Data Structures To Support Extensibility	16
-#### MUST: Avoid Versioning	17
-#### Should: Use URI Versioning	17
+#### MUST: Do Not Break Backward Compatibility
+#### Should: Prefer Compatible Extensions
+#### Should: Prepare Clients To Not Crash On Compatible API Extensions
+#### Should: Design APIs Conservatively
+#### Should: Always Return JSON Objects As Top-Level Data Structures To Support Extensibility
+#### MUST: Avoid Versioning
+#### Should: Use URI Versioning
 
 ### Deprecation
-#### MUST: External Partners Must Agree on Deprecation Timespan	17
-#### Should: Obtain Approval of Clients	17
-#### Should: Reflect Deprecation in API Definition	17
-#### Should: Monitor Usage of Deprecated APIs	18
-#### Should: Add a Warning Header to Responses	18
-#### Should: Add Monitoring for Warning Header	18
-#### MUST: Not Start Using Deprecated APIs	18
+#### MUST: External Partners Must Agree on Deprecation Timespan
+#### Should: Obtain Approval of Clients
+#### Should: Reflect Deprecation in API Definition
+#### Should: Monitor Usage of Deprecated APIs
+#### Should: Add a Warning Header to Responses
+#### Should: Add Monitoring for Warning Header
+#### MUST: Not Start Using Deprecated APIs
 
 ### JSON Guidelines
-#### Should: Property names must be ASCII snake_case	18
-#### Should: Array names should be pluralized	18
-#### Should: Boolean property values must not be null	18
-#### Should: Null values should have their fields removed	18
-#### Should: Empty array values should not be null	19
-#### Should: Enumerations should be represented as Strings	19
-#### Should: Date property values should conform to RFC 3339	19
-#### Should: Time durations and intervals could conform to ISO 8601	19
-#### Should: Standards could be used for Language, Country and Currency	19
+#### Should: Property names must be ASCII snake_case
+#### Should: Array names should be pluralized
+#### Should: Boolean property values must not be null
+#### Should: Null values should have their fields removed
+#### Should: Empty array values should not be null
+#### Should: Enumerations should be represented as Strings
+#### Should: Date property values should conform to RFC 3339
+#### Should: Time durations and intervals could conform to ISO 8601
+#### Should: Standards could be used for Language, Country and Currency
 
 ### API Naming
-#### MUST: Use lowercase separate words with hyphens for Path Segments	19
-#### MUST: Use snake_case (never camelCase) for Query Parameters	20
-#### Should: Prefer Hyphenated-Pascal-Case for HTTP header Fields	20
-#### MUST: Pluralize Resource Names	20
-#### Should: Avoid Trailing Slashes	20
-#### May: Use Conventional Query Strings	20
+#### MUST: Use lowercase separate words with hyphens for Path Segments
+#### MUST: Use snake_case (never camelCase) for Query Parameters
+#### Should: Prefer Hyphenated-Pascal-Case for HTTP header Fields
+#### MUST: Pluralize Resource Names
+#### Should: Avoid Trailing Slashes
+#### May: Use Conventional Query Strings
 
 ### Resources
-#### MUST: Avoid Actions — Think About Resources	20
-#### Should: Model complete business processes	21
-#### Should: Define useful resources	21
-#### MUST: Keep URLs Verb-Free	21
-#### Should: Use Domain-Specific Resource Names	21
-#### Should: Identify resources and Sub-Resources via Path Segments	21
-#### Should: Only Use UUIDs If Necessary	22
-#### May: Consider Using (Non-) Nested URLs	22
-#### Should: Limit number of Resource types	22
-#### Should: Limit number of Sub-Resource Levels	23
+#### MUST: Avoid Actions — Think About Resources
+#### Should: Model complete business processes
+#### Should: Define useful resources
+#### MUST: Keep URLs Verb-Free
+#### Should: Use Domain-Specific Resource Names
+#### Should: Identify resources and Sub-Resources via Path Segments
+#### Should: Only Use UUIDs If Necessary
+#### May: Consider Using (Non-) Nested URLs
+#### Should: Limit number of Resource types
+#### Should: Limit number of Sub-Resource Levels
 
 ### HTTP
-#### MUST: Use HTTP Methods Correctly	23
-#### Should: Fulfill Safeness and Idempotency Properties	26
-#### Should: Use Specific HTTP Status Codes	26
-#### Should: Specify Success and Error Responses	29
-#### Should: Use 207 for Batch or Bulk Requests	30
-#### Should: Use 429 with Headers for Rate Limits	30
-#### Should: Explicitly define the Collection Format of Query Parameters	31
+#### MUST: Use HTTP Methods Correctly
+#### Should: Fulfill Safeness and Idempotency Properties
+#### Should: Use Specific HTTP Status Codes
+#### Should: Specify Success and Error Responses
+#### Should: Use 207 for Batch or Bulk Requests
+#### Should: Use 429 with Headers for Rate Limits
+#### Should: Explicitly define the Collection Format of Query Parameters
 
 ### Performance
-#### Should: Reduce Bandwidth Needs and Improve Responsiveness	31
-#### May: Use gzip Compression	31
-#### Should: Support Filtering of Resource Fields	32
-#### Should: Allow Optional Embedding of Sub-Resources	33
-#### Should: Document Caching, if Supported	33
+#### Should: Reduce Bandwidth Needs and Improve Responsiveness
+#### May: Use gzip Compression
+#### Should: Support Filtering of Resource Fields
+#### Should: Allow Optional Embedding of Sub-Resources
+#### Should: Document Caching, if Supported
 
 ### Pagination
-#### Should: Support Pagination	34
-#### Should: Prefer Cursor-Based Pagination, Avoid Offset-Based Pagination	34
-#### May: Use Pagination Links Where Applicable	35
+#### Should: Support Pagination
+#### Should: Prefer Cursor-Based Pagination, Avoid Offset-Based Pagination
+#### May: Use Pagination Links Where Applicable
 
 ### Hypermedia
-#### Must: Use REST Maturity Level 2	35
-#### May: Use REST Maturity Level 3 - HATEOAS	36
-#### Should: Use full, absolute URI	36
-#### Should: Use Common Hypertext Controls	36
-#### Should: Use Simple Hypertext Controls for Pagination and Self-References	37
-#### Should: Not Use “Link Headers” with JSON entities	37
+#### Must: Use REST Maturity Level 2
+#### May: Use REST Maturity Level 3 - HATEOAS
+#### Should: Use full, absolute URI
+#### Should: Use Common Hypertext Controls
+#### Should: Use Simple Hypertext Controls for Pagination and Self-References
+#### Should: Not Use “Link Headers” with JSON entities
 
 ### Data formats
-#### Should: Use JSON to Encode Structured Data	37
-#### May: Use non JSON Media Types for Binary Data or Alternative Content Representations	38
-#### Should: Use Standard Date and Time Formats	38
-#### Should: Use Standards for Country, Language and Currency Codes	38
-#### Should: Define Format for Type Number and Integer	38
-#### Should: Prefer standard Media type name application/json	39
+#### Should: Use JSON to Encode Structured Data
+#### May: Use non JSON Media Types for Binary Data or Alternative Content Representations
+#### Should: Use Standard Date and Time Formats
+#### Should: Use Standards for Country, Language and Currency Codes
+#### Should: Define Format for Type Number and Integer
+#### Should: Prefer standard Media type name application/json
 
 ### Common Data Types
-#### Should: Use a Common Money Object	39
-#### Should: Use common field names and semantics	40
-#### Should: Follow Hypertext Control Conventions	42
-#### Should: Use Problem JSON	42
-#### MUST: Do not expose Stack Traces	43
+#### Should: Use a Common Money Object
+#### Should: Use common field names and semantics
+#### Should: Follow Hypertext Control Conventions
+#### Should: Use Problem JSON
+#### MUST: Do not expose Stack Traces
 
 ### Common Headers
-#### Should: Use Content Headers Correctly	43
-#### Should: Use Standardized Headers	43
-#### May: Use Content-Location Header	43
-#### Should: Use Location Header instead of Content-Location Header	44
-#### May: Use the Prefer header to indicate processing preferences	44
-#### May: Consider using ETag together with If-(None-)Match header	44
+#### Should: Use Content Headers Correctly
+#### Should: Use Standardized Headers
+#### May: Use Content-Location Header
+#### Should: Use Location Header instead of Content-Location Header
+#### May: Use the Prefer header to indicate processing preferences
+#### May: Consider using ETag together with If-(None-)Match header
 
 ### API Operations
-#### Must: Publish OpenAPI Specification	45
-#### Should: Monitor API Usage	45
+#### Must: Publish OpenAPI Specification
+#### Should: Monitor API Usage
