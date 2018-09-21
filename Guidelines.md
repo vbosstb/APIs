@@ -854,40 +854,44 @@ Make sure that you don’t convert the “amount” field to float / double type
 #### Should: Use common field names and semantics
 There exist a variety of field types that are required in multiple places. To achieve consistency across all API implementations, you must use common field names and semantics whenever applicable.
 ##### Generic Fields
-There are some data fields that come up again and again in API data:
-- id: the identity of the object. If used, IDs must be opaque strings and not numbers. IDs are unique within some documented context, are stable and don’t change for a given object once assigned, and are never recycled cross entities.
-- xyz_id: an attribute within one object holding the identifier of another object must use a name that corresponds to the type of the referenced object or the relationship to the referenced object followed by _id (e.g. customer_id not customer_number; parent_node_id for the reference to a parent node from a child node, even if both have the type Node)
-- created: when the object was created. If used, this must be a date-time construct.
-- modified: when the object was updated. If used, this must be a date-time construct.
-- type: the kind of thing this object is. If used, the type of this field should be a string. Types allow runtime information on the entity provided that otherwise requires examining the Open API file.
+There are some data fields that come up again and again in API data: 
+- id: the identity of the object. If used, IDs must be opaque strings and not numbers. IDs are unique within some documented context, are stable and don’t change for a given object once assigned, and are never recycled cross entities. 
+- xyz_id: an attribute within one object holding the identifier of another object must use a name that corresponds to the type of the referenced object or the relationship to the referenced object followed by _id (e.g. customer_id not customer_number; parent_node_id for the reference to a parent node from a child node, even if both have the type Node) 
+- created: when the object was created. If used, this must be a date-time construct. 
+- modified: when the object was updated. If used, this must be a date-time construct. 
+- type: the kind of thing this object is. If used, the type of this field should be a string. Types allow runtime information on the entity provided that otherwise requires examining the Open API file. 
+
 Example JSON schema:
-  tree_node:
-    type: object
-    properties:
-      id:
-        description: the identifier of this node
-        type: string
-      created:
-        description: when got this node created
-        type: string
-        format: 'date-time'
-      modified:
-        description: when got this node last updated
-        type: string
-        format: 'date-time'
-      type:
-        type: string
-        enum: [ 'LEAF', 'NODE' ]
-      parent_node_id:
-        description: the identifier of the parent node of this node
-        type: string
-    example:
-      id: '123435'
-      created: '2017-04-12T23:20:50.52Z'
-      modified: '2017-04-12T23:20:50.52Z'
-      type: 'LEAF'
-      parent_node_id: '534321'
+
+    tree_node:
+        type: object
+        properties:
+            id:
+                description: the identifier of this node
+                type: string
+            created:
+                description: when got this node created
+                type: string
+                format: 'date-time'
+            modified:
+                description: when got this node last updated
+                type: string
+                format: 'date-time'
+            type:
+                type: string
+                enum: [ 'LEAF', 'NODE' ]
+            parent_node_id:
+                description: the identifier of the parent node of this node
+                type: string
+        example:
+            id: '123435'
+            created: '2017-04-12T23:20:50.52Z'
+            modified: '2017-04-12T23:20:50.52Z'
+            type: 'LEAF'
+            parent_node_id: '534321'
+
 These properties are not always strictly necessary, but making them idiomatic allows API client developers to build up a common understanding of the resources. There is very little utility for API consumers in having different names or value types for these fields across APIs.
+
 ##### Address Fields
 Address structures play a role in different functional and use-case contexts, including country variances. All attributes that relate to address information should follow the naming and semantics defined below.
 
