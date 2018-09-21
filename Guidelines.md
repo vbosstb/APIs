@@ -506,14 +506,16 @@ An operation can be…
 - idempotent, i.e. operation will have the same effect on the server’s state if executed once or multiple times (note: this does not necessarily mean returning the same response or status code)
 - safe, i.e. must not have side effects such as state changes
 Method implementations must fulfill the following basic properties:
-HTTP method   safe  idempotent
-OPTIONS       Yes	  Yes
-HEAD	        Yes	  Yes
-GET	          Yes	  Yes
-PUT	          No	  Yes
-POST	        No	  No
-DELETE	      No	  Yes
-PATCH	        No	  No
+
+| HTTP method | safe | idempotent |
+| --- | --- | --- |
+| OPTIONS | Yes | Yes | 
+| HEAD | Yes | Yes | 
+| GET | Yes | Yes | 
+| PUT | No | Yes | 
+| POST | No | No | 
+| DELETE | No | Yes | 
+| PATCH | No | No | 
 
 #### Should: Use Specific HTTP Status Codes
 This guideline groups the following rules for HTTP status codes usage:
