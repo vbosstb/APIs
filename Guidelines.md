@@ -319,20 +319,25 @@ Schema based JSON properties that are by design durations and intervals could be
 ### API Naming
 #### MUST: Use lowercase separate words with hyphens for Path Segments
 Example:
-  /shipment-orders/{shipment-order-id}
+
+    /shipment-orders/{shipment-order-id}
+    
 This applies to concrete path segments and not the names of path parameters. For example {shipment_order_id} would be ok as a path parameter.
 
 #### MUST: Use snake_case (never camelCase) for Query Parameters
 Examples:
-  customer_number, order_id, billing_address
+
+    customer_number, order_id, billing_address
 
 #### Should: Prefer Hyphenated-Pascal-Case for HTTP header Fields
 This is for consistency in your documentation (most other headers follow this convention). Avoid camelCase (without hyphens). Exceptions are common abbreviations like “ID.”
 Examples:
-  Accept-Encoding
-  Apply-To-Redirect-Ref
-  Disposition-Notification-Options
-  Original-Message-ID
+
+    Accept-Encoding
+    Apply-To-Redirect-Ref
+    Disposition-Notification-Options
+    Original-Message-ID
+
 See also: <a href="http://tools.ietf.org/html/rfc7230#page-22">HTTP Headers are case-insensitive (RFC 7230)</a>.
 
 #### MUST: Pluralize Resource Names
@@ -355,7 +360,9 @@ If you provide query support for sorting, pagination, filtering functions or oth
 #### MUST: Avoid Actions — Think About Resources
 REST is all about your resources, so consider the domain entities that take part in web service interaction, and aim to model your API around these using the standard HTTP methods as operation indicators. For instance, if an application has to lock articles explicitly so that only one user may edit them, create an article lock with PUT or POST instead of using a lock action.
 Request:
-  PUT /article-locks/{article-id}
+
+    PUT /article-locks/{article-id}
+    
 The added benefit is that you already have a service for browsing and filtering article locks.
 
 #### Should: Model complete business processes
@@ -375,12 +382,15 @@ API resources represent elements of the application’s domain model. Using doma
 Some API resources may contain or reference sub-resources. Embedded sub-resources, which are not top-level resources, are parts of a higher-level resource and cannot be used outside of its scope. Sub-resources should be referenced by their name and identifier in the path segments.
 Composite identifiers must not contain / as a separator. In order to improve the consumer experience, you should aim for intuitively understandable URLs, where each sub-path is a valid reference to a resource or a set of resources. For example, if/customers/12ev123bv12v/addresses/DE_100100101 is a valid path of your API, then /customers/12ev123bv12v/addresses, /customers/12ev123bv12v and /customers must be valid as well in principle.
 Basic URL structure:
-  /{resources}/[resource-id]/{sub-resources}/[sub-resource-id]
-  /{resources}/[partial-id-1][separator][partial-id-2]
+
+    /{resources}/[resource-id]/{sub-resources}/[sub-resource-id]
+    /{resources}/[partial-id-1][separator][partial-id-2]
+
 Examples:
-  /carts/1681e6b88ec1/items
-  /carts/1681e6b88ec1/items/1
-  /customers/12ev123bv12v/addresses/DE_100100101
+
+    /carts/1681e6b88ec1/items
+    /carts/1681e6b88ec1/items/1
+    /customers/12ev123bv12v/addresses/DE_100100101
 
 #### Should: Only Use UUIDs If Necessary
 Generating IDs can be a scaling problem in high frequency and near real time use cases. UUIDs solve this problem, as they can be generated without collisions in a distributed, non-coordinated way and without additional server roundtrips.
@@ -399,21 +409,26 @@ Hint: Usually, random UUID is used - see UUID version 4 in <a href="https://tool
 
 #### May: Consider Using (Non-) Nested URLs
 If a sub-resource is only accessible via its parent resource and may not exists without parent resource, consider using a nested URL structure, for instance:
-  /carts/1681e6b88ec1/cart-items/1
+
+    /carts/1681e6b88ec1/cart-items/1
+
 However, if the resource can be accessed directly via its unique id, then the API should expose it as a top-level resource. For example, customer has a collection for sales orders; however, sales orders have globally unique id and some services may choose to access the orders directly, for instance:
-  /customers/1681e6b88ec1
-  /sales-orders/5273gh3k525a
+
+    /customers/1681e6b88ec1
+    /sales-orders/5273gh3k525a
 
 #### Should: Limit number of Resource types
 To keep maintenance and service evolution manageable, we should follow "functional segmentation" and "separation of concern" design principles and do not mix different business functionalities in same API definition. In practice this means that the number of resource types exposed via an API should be limited. In this context a resource type is defined as a set of highly related resources such as a collection, its members and any direct sub-resources.
 For example, the resources below would be counted as three resource types, one for customers, one for the addresses, and one for the customers' related addresses:
-  /customers
-  /customers/{id}
-  /customers/{id}/preferences
-  /customers/{id}/addresses
-  /customers/{id}/addresses/{addr}
-  /addresses
-  /addresses/{addr}
+
+    /customers
+    /customers/{id}
+    /customers/{id}/preferences
+    /customers/{id}/addresses
+    /customers/{id}/addresses/{addr}
+    /addresses
+    /addresses/{addr}
+
 Note that:
 - We consider /customers/{id}/preferences part of the /customers resource type because it has a one-to-one relation to the customer without an additional identifier.
 - We consider /customers and /customers/{id}/addresses as separate resource types because /customers/{id}/addresses/{addr} also exists with an additional identifier for the address.
@@ -580,47 +595,52 @@ Though gzip compression might be the default choice for server payload, the serv
 
 #### Should: Support Filtering of Resource Fields
 Depending on your use case and payload size, you can significantly reduce network bandwidth need by supporting filtering of returned entity fields. Here, the client can determine the subset of fields he wants to receive via the fields query parameter:
-<b>Unfiltered</b>
-  GET http://api.example.org/resources/123 HTTP/1.1
-  
-  HTTP/1.1 200 OK
-  Content-Type: application/json
-  
-  {
-    "id": "cddd5e44-dae0-11e5-8c01-63ed66ab2da5",
-    "name": "John Doe",
-    "address": "1600 Pennsylvania Avenue Northwest, Washington, DC, United States",
-    "birthday": "1984-09-13",
-    "partner": {
-      "id": "1fb43648-dae1-11e5-aa01-1fbc3abb1cd0",
-      "name": "Jane Doe",
-      "address": "1600 Pennsylvania Avenue Northwest, Washington, DC, United States",
-      "birthday": "1988-04-07"
+
+#####Unfiltered
+
+    GET http://api.example.org/resources/123 HTTP/1.1
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    
+    {
+        "id": "cddd5e44-dae0-11e5-8c01-63ed66ab2da5",
+        "name": "John Doe",
+        "address": "1600 Pennsylvania Avenue Northwest, Washington, DC, United States",
+        "birthday": "1984-09-13",
+        "partner": {
+            "id": "1fb43648-dae1-11e5-aa01-1fbc3abb1cd0",
+            "name": "Jane Doe",
+            "address": "1600 Pennsylvania Avenue Northwest, Washington, DC, United States",
+            "birthday": "1988-04-07"
+        }
     }
-  }
-<b>Filtered</b>
-  GET http://api.example.org/resources/123?fields=(name,partner(name)) HTTP/1.1
-  
-  HTTP/1.1 200 OK
-  Content-Type: application/json
-  
-  {
-    "name": "John Doe",
-    "partner": {
-      "name": "Jane Doe"
-    }
-  }
+    
+#####Filtered
+
+    GET http://api.example.org/resources/123?fields=(name,partner(name)) HTTP/1.1
+    
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    {
+        "name": "John Doe",
+        "partner": {
+            "name": "Jane Doe"
+        }
+      }
+      
 As illustrated by this example, field filtering should be done via request parameter "fields" with value range defined by the following BNF grammar.
-  <fields> ::= <negation> <fields_expression> | <fields_expression>
-  <negation> ::= "!"
-  <fields_expression> ::= "(" <field_set> ")"
-  <field_set> ::= <qualified_field> | <qualified_field> "," <field_set>
-  <qualified_field> ::= <field> | <field> <fields_expression>
-  <field> ::= <DASH_LETTER_DIGIT> | <DASH_LETTER_DIGIT> <field>
-  <DASH_LETTER_DIGIT> ::= <DASH> | <LETTER> | <DIGIT>
-  <DASH> ::= "-" | "_"
-  <LETTER> ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
-  <DIGIT> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+    <fields> ::= <negation> <fields_expression> | <fields_expression>
+    <negation> ::= "!"
+    <fields_expression> ::= "(" <field_set> ")"
+    <field_set> ::= <qualified_field> | <qualified_field> "," <field_set>
+    <qualified_field> ::= <field> | <field> <fields_expression>
+    <field> ::= <DASH_LETTER_DIGIT> | <DASH_LETTER_DIGIT> <field>
+    <DASH_LETTER_DIGIT> ::= <DASH> | <LETTER> | <DIGIT>
+    <DASH> ::= "-" | "_"
+    <LETTER> ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+    <DIGIT> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+    
 A fields_expression as defined by the grammar describes the properties of an object, i.e. (name)returns only the name property of the root object. (name,partner(name)) returns the name and partner properties where partner itself is also an object and only its name property is returned.
 Hint: OpenAPI doesn’t allow you to formally specify whether depending on a given parameter will return different parts of the specified result schema. Explain this in English in the parameter description.
 
@@ -628,23 +648,23 @@ Hint: OpenAPI doesn’t allow you to formally specify whether depending on a giv
 Embedding related resources (also known as Resource expansion) is a great way to reduce the number of requests. In cases where clients know upfront that they need some related resources they can instruct the server to prefetch that data eagerly. Whether this is optimized on the server, e.g. a database join, or done in a generic way, e.g. an HTTP proxy that transparently embeds resources, is up to the implementation.
 See “Use Conventional Query Strings” for naming, e.g. "embed" for steering of embedded resource expansion. Please use the <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a> grammar, as already defined above for filtering, when it comes to an embedding query syntax.
 Embedding a sub-resource can possibly look like this where an order resource has its order items as sub-resource (/order/{orderId}/items):
-  GET /order/123?embed=(items) HTTP/1.1
 
-  {
-    "id": "123",
-    "_embedded": {
-      "items": [
-        {
-          "position": 1,
-          "sku": "1234-ABCD-7890",
-          "price": {
-            "amount": 71.99,
-            "currency": "EUR"
-          }
+    GET /order/123?embed=(items) HTTP/1.1
+    {
+        "id": "123",
+        "_embedded": {
+            "items": [
+                {
+                    "position": 1,
+                    "sku": "1234-ABCD-7890",
+                    "price": {
+                        "amount": 71.99,
+                        "currency": "EUR"
+                    }
+                }
+            ]
         }
-      ]
     }
-  }
 
 #### Should: Document Caching, if Supported
 If an API is intended to support caching, it must take care to specify this ability by defining the caching boundaries i.e. time-to-live and cache constraints, by providing the Cache-Control and Vary headers (Please read <a href="https://tools.ietf.org/html/rfc7234">RFC-7234</a> carefully).
@@ -686,28 +706,29 @@ Those collections should then have an items attribute holding the items of the c
 You should avoid providing a total count in your API unless there’s a clear need to do so. Very often, there are systems and performance implications to supporting full counts, especially as datasets grow and requests become complex queries or filters that drive full scans (e.g., your database might need to look at all candidate items to count them). While this is an implementation detail relative to the API, it’s important to consider your ability to support serving counts over the life of a service.
 If the collection consists of links to other resources, the collection name should use <a href="http://www.iana.org/assignments/link-relations/link-relations.xml">IANA registered link relations</a> as names whenever appropriate, but use plural form.
 E.g. a service for articles could represent the collection of hyperlinks to an article’s authors like that:
-  {
-    "self": "https://.../articles/xyz/authors/",
-    "index": 0,
-    "page_size": 5,
-    "items": [
-      {
-        "href": "https://...",
-        "id": "123e4567-e89b-12d3-a456-426655440000",
-        "name": "Kent Beck"
-      },
-      {
-        "href": "https://...",
-        "id": "987e2343-e89b-12d3-a456-426655440000",
-        "name": "Mike Beedle"
-      },
-      ...
-    ],
-    "first": "https://...",
-    "next": "https://...",
-    "prev": "https://...",
-    "last": "https://..."
-  }
+
+    {
+        "self": "https://.../articles/xyz/authors/",
+        "index": 0,
+        "page_size": 5,
+        "items": [
+            {
+                "href": "https://...",
+                "id": "123e4567-e89b-12d3-a456-426655440000",
+                "name": "Kent Beck"
+            },
+            {
+                "href": "https://...",
+                "id": "987e2343-e89b-12d3-a456-426655440000",
+                "name": "Mike Beedle"
+            },
+            ...
+        ],
+        "first": "https://...",
+        "next": "https://...",
+        "prev": "https://...",
+        "last": "https://..."
+    }
 
 ### Hypermedia
 #### Must: Use REST Maturity Level 2
@@ -734,31 +755,35 @@ Links to other resource must always use full, absolute URI.
 
 #### Should: Use Common Hypertext Controls
 When embedding links to other resources into representations you must use the common hypertext control object. It contains at least one attribute:
-- href: The URI of the resource the hypertext control is linking to. All our API are using HTTPS as URI scheme.
-In API that contain any hypertext controls, the attribute name href is reserved for usage within hypertext controls.
+- href: The URI of the resource the hypertext control is linking to. All our API are using HTTPS as URI scheme. 
+In API that contain any hypertext controls, the attribute name href is reserved for usage within hypertext controls. 
 The schema for hypertext controls can be derived from this model:
-  HttpLink:
-    description: A base type of objects representing links to resources.
-    type: object
-    properties:
-      href:
-        description: Any URI that is using http or https protocol
-        type: string
-        format: uri
-    required: [ "href" ]
+
+    HttpLink:
+        description: A base type of objects representing links to resources.
+        type: object
+        properties:
+            href:
+                description: Any URI that is using http or https protocol
+                type: string
+                format: uri
+        required: [ "href" ]
+
 The name of an attribute holding such a HttpLink object specifies the relation between the object that contains the link and the linked resource. Implementations should use names from the IANA Link Relation Registry whenever appropriate. As IANA link relation names use hyphen-case notation, while this guide enforces snake_case notation for attribute names, hyphens in IANA names have to be replaced with underscores (e.g. the IANA link relation type version-history would become the attribute version_history)
 Specific link objects may extend the basic link type with additional attributes, to give additional information related to the linked resource or the relationship between the source resource and the linked one.
 E.g. a service providing "Person" resources could model a person who is married with some other person with a hypertext control that contains attributes which describe the other person (id, name) but also the relationship "spouse" between the two persons (since):
-  {
-    "id": "446f9876-e89b-12d3-a456-426655440000",
-    "name": "Peter Mustermann",
-    "spouse": {
-      "href": "https://...",
-      "since": "1996-12-19",
-      "id": "123e4567-e89b-12d3-a456-426655440000",
-      "name": "Linda Mustermann"
+
+    {
+        "id": "446f9876-e89b-12d3-a456-426655440000",
+        "name": "Peter Mustermann",
+        "spouse": {
+            "href": "https://...",
+            "since": "1996-12-19",
+            "id": "123e4567-e89b-12d3-a456-426655440000",
+            "name": "Linda Mustermann"
+        }
     }
-  }
+
 Hypertext controls are allowed anywhere within a JSON model. While this specification would allow <a href="http://stateless.co/hal_specification.html">HAL</a>, we actually don’t recommend/enforce the usage of HAL anymore as the structural separation of meta-data and data creates more harm than value to the understandability and usability of an API.
 
 #### Should: Use Simple Hypertext Controls for Pagination and Self-References
@@ -798,24 +823,25 @@ Whenever an API defines a property of type number or integer, the precision must
   number - double - IEEE 754-2008/ISO 60559:2011 binary128 decimal number
   number - decimal - arbitrarily precise signed decimal number
 The precision must be translated by clients and servers into the most specific language types. E.g. for the following definitions the most specific language types in Java will translate to BigDecimal forMoney.amount and int or Integer for the OrderList.page_size:
-  Money:
-    type: object
-    properties:
-      amount:
-        type: number
-        description: Amount expressed as a decimal number of major currency units
-        format: decimal
-        example: 99.95
-     ...
 
-  OrderList:
-    type: object
-    properties:
-      page_size:
-        type: integer
-        description: Number of orders in list
-        format: int32
-        example: 42
+    Money:
+        type: object
+        properties:
+            amount:
+                type: number
+                description: Amount expressed as a decimal number of major currency units
+                format: decimal
+                example: 99.95
+    ...
+
+    OrderList:
+        type: object
+        properties:
+            page_size:
+                type: integer
+                description: Number of orders in list
+                format: int32
+                example: 42
 
 #### Should: Prefer standard Media type name application/json
 Previously, this guideline allowed the use of custom media types. This usage is not recommended anymore and should be avoided, except where it is necessary for cases of media type versioning. Instead, the standard media type name application/json (or Problem JSON) should be used.
@@ -826,22 +852,24 @@ Definitions of data objects that are good candidates for wider usage:
 
 #### Should: Use a Common Money Object
 Use the following common money structure:
-  Money:
-    type: object
-    properties:
-      amount:
-        type: number
-        description: Amount expressed as a decimal number of major currency units
-        format: decimal
-        example: 99.95
-      currency:
-        type: string
-        description: 3 letter currency code as defined by ISO-4217
-        format: iso-4217
-        example: EUR
-    required:
+
+    Money:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Amount expressed as a decimal number of major currency units
+          format: decimal
+          example: 99.95
+        currency:
+          type: string
+          description: 3 letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: EUR
+      required:
       - amount
       - currency
+
 The decimal values for "amount" describe unit and subunit of the currency in a single value, where the digits before the decimal point are for the major unit and the digits after the decimal point are for the minor unit. Note that some business cases (e.g. transactions in Bitcoin) call for a higher precision, so applications must be prepared to accept values with unlimited precision, unless explicitly stated otherwise in the API specification. Examples for correct representations (in EUR):
 - 42.20 or 42.2 = 42 Euros, 20 Cent
 - 0.23 = 23 Cent
@@ -989,13 +1017,13 @@ Content or entity headers are headers with a Content- prefix. They describe the 
 #### Should: Use Standardized Headers
 Use <a href="http://en.wikipedia.org/wiki/List_of_HTTP_header_fields">this list</a> and mention its support in your OpenAPI definition.
 
-#### May: Use Content-Location Header
-The Content-Location header is optional and can be used in successful write operations (PUT, POST or PATCH) or read operations (GET, HEAD) to guide caching and signal a receiver the actual location of the resource transmitted in the response body. This allows clients to identify the resource and to update their local copy when receiving a response with this header.
-The Content-Location header can be used to support the following use cases:
-- For reading operations GET and HEAD, a different location than the requested URI can be used to indicate that the returned resource is subject to content negotiations, and that the value provides a more specific identifier of the resource.
-- For writing operations PUT and PATCH, an identical location to the requested URI, can be used to explicitly indicate that the returned resource is the current representation of the newly created or updated resource.
-- For writing operations POST and DELETE, a content location can be used to indicate that the body contains a status report resource in response to the requested action, which is available at provided location.
-Note: When using the Content-Location header, the Content-Type header has to be set as well. For example:
+#### May: Use Content-Location Header 
+The Content-Location header is optional and can be used in successful write operations (PUT, POST or PATCH) or read operations (GET, HEAD) to guide caching and signal a receiver the actual location of the resource transmitted in the response body. This allows clients to identify the resource and to update their local copy when receiving a response with this header. 
+The Content-Location header can be used to support the following use cases: 
+- For reading operations GET and HEAD, a different location than the requested URI can be used to indicate that the returned resource is subject to content negotiations, and that the value provides a more specific identifier of the resource. 
+- For writing operations PUT and PATCH, an identical location to the requested URI, can be used to explicitly indicate that the returned resource is the current representation of the newly created or updated resource. 
+- For writing operations POST and DELETE, a content location can be used to indicate that the body contains a status report resource in response to the requested action, which is available at provided location. 
+<b>Note</b>: When using the Content-Location header, the Content-Type header has to be set as well. For example: 
   
     GET /products/123/images HTTP/1.1
     
