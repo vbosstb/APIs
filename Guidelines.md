@@ -1041,39 +1041,32 @@ Beside other use cases, the If-None-Match: header with parameter * can be used i
 
 The ETag, If-Match, and If-None-Match headers can be defined as follows in the API definition:
 
->  Etag:  
->    name: Etag  
->    description:  
->      The RFC7232 ETag header field in a response provides the current entitytag for the selected resource. An entity-tag is an opaque identifier for different versions of a resource over time, regardless whether multiple versions are valid at the same time. An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.  <br>
->    in: header  
->    type: string   
->    required: false  
->    example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70"  
-
-  IfMatch:
-    name: If-Match
-    description: |
-      The RFC7232 If-Match header field in a request requires the server to
-      only operate on the resource that matches at least one of the provided
-      entity-tags. This allows clients express a precondition that prevent
-      the method from being applied if there have been any changes to the
-      resource.
-    in: header
-    type: string
-    required: false
-    example:  "5", "7da7a728-f910-11e6-942a-68f728c1ba70"
-
-  IfNoneMatch:
-    name: If-None-Match
-    description: |
-      The RFC7232 If-None-Match header field in a request requires the server
-      to only operate on the resource if it does not match any of the provided
-      entity-tags. If the provided entity-tag is `*`, it is required that the
-      resource does not exist at all.
-    in: header
-    type: string
-    required: false
-    example: "7da7a728-f910-11e6-942a-68f728c1ba70", *
+>Etag:  
+>  name: Etag  
+>  description:  
+>    The RFC7232 ETag header field in a response provides the current entitytag for the selected resource. An entity-tag is an opaque identifier for different versions of a resource over time, regardless whether multiple versions are valid at the same time. An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.  <br>
+>  in: header  
+>  type: string   
+>  required: false  
+>  example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70"  
+>
+>IfMatch: 
+>  name: If-Match 
+>  description: | 
+>    The RFC7232 If-Match header field in a request requires the server to only operate on the resource that matches at least one of the provided entity-tags. This allows clients express a precondition that prevent the method from being applied if there have been any changes to the resource. 
+>  in: header 
+>  type: string 
+>  required: false 
+>  example:  "5", "7da7a728-f910-11e6-942a-68f728c1ba70" 
+>
+>IfNoneMatch: 
+>  name: If-None-Match 
+>  description:  
+>    The RFC7232 If-None-Match header field in a request requires the server to only operate on the resource if it does not match any of the provided entity-tags. If the provided entity-tag is `*`, it is required that the resource does not exist at all. 
+>  in: header 
+>  type: string 
+>  required: false 
+>  example: "7da7a728-f910-11e6-942a-68f728c1ba70", * 
 
 Please also see the section “Optimistic Locking in RESTful APIs” for a discussion about alternative approaches.
 
